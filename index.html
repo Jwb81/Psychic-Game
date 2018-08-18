@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+    <div>
+        <p >Guess which key I am thinking of (press a key to play)</p>
+        <p >Wins: <span id='wins'></span></p>
+        <p >Losses: <span id='losses'></span></p>
+        <p >Guesses Left: <span id='guessesLeft'></span></p>
+        <p ><span id="message"></span></p>
+        <p >Letters used: <span id='lettersGuessed'></span></p>
+        <p><span id="compKey"></span></p>
+    </div>
+
+    <script>
+        document.onkeyup = function(evt) {
+            var keyPressed = evt.key.toLowerCase();
+            continueGame(keyPressed);
+        }
+
+        var wins = 0, losses = 0;
+        var guessesLeft = 9;
+        var compKey;
+        var guesses = [];
+
+        function newGame() {
+            guesses = [];   //reset the guesses
+            guessesLeft = 9;
+            // document.getElementById("message").innerText = "";
+            document.getElementById('guessesLeft').innerText = guessesLeft;
+            compKey = Math.floor((Math.random() * 26) + 1);
+            compKey = String.fromCharCode(compKey + 64);
+            compKey = compKey.toLowerCase();
+            document.getElementById('compKey').innerText = compKey;
+        }
+
+        function continueGame(char) {
+            // check if the user already pressed that key
+            for (var i = 0; i < guesses.length; i++) {
+                if (guesses[i] == char) {
+                    return; // don't do anything if the user has already pressed this key
+                }
+            }
+
+            // append last guess to list of guesses by the user
+            // if (guessesLeft == 9) 
+            //     document.getElementById('lettersGuessed').innerText = char;
+            // else 
+            //     document.getElementById('lettersGuessed').innerText += ', ' + char;
+            guesses.push(char);
+            document.getElementById('lettersGuessed').innerText = guesses;
+
+
+            // if the player guessed the key, reset the game
+            if ( char == compKey ) {
+                document.getElementById("message").innerText = "You guessed right!";
+                setTimeout(function() {
+                    document.getElementById("message").innerText = "";
+                }, 2000);
+                wins++;
+                document.getElementById('wins').innerText = wins;
+                newGame();
+                return;
+            }
+            
+
+            guessesLeft--;
+            if ( guessesLeft == 0 ) {
+                document.getElementById('message').innerText = "You are out of guesses...";
+                setTimeout(function() {
+                    document.getElementById("message").innerText = "";
+                }, 2000);
+                losses++;
+                document.getElementById('losses').innerText = losses;
+                newGame();
+                return;
+            }
+            else {
+                document.getElementById('guessesLeft').innerText = guessesLeft;
+            }
+        }
+    
+        // start the game when the page loads
+        newGame();
+    </script>
+    
+</body>
+</html>

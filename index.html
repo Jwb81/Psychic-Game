@@ -15,7 +15,7 @@
         <p >Guesses Left: <span id='guessesLeft'></span></p>
         <p ><span id="message"></span></p>
         <p >Letters used: <span id='lettersGuessed'></span></p>
-        <p><span id="compKey"></span></p>
+        <!-- <p><span id="compKey"></span></p> -->
     </div>
 
     <script>
@@ -37,7 +37,7 @@
             compKey = Math.floor((Math.random() * 26) + 1);
             compKey = String.fromCharCode(compKey + 64);
             compKey = compKey.toLowerCase();
-            document.getElementById('compKey').innerText = compKey;
+            // document.getElementById('compKey').innerText = compKey;
         }
 
         function continueGame(char) {
